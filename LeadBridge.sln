@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadBridge.Core.Api", "LeadBridge.Core.Api\LeadBridge.Core.Api.csproj", "{880395D5-5150-4F0D-980D-DEBD737F771A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F28AF537-32A0-4917-AE9F-5EB334D8E2BF} = {F28AF537-32A0-4917-AE9F-5EB334D8E2BF}
+		{2891907E-9DD0-4CD7-AB90-603787A55898} = {2891907E-9DD0-4CD7-AB90-603787A55898}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadBridge.Core.Domain", "LeadBridge.Core.Domain\LeadBridge.Core.Domain.csproj", "{B413A063-DF7A-46EF-91F4-096F1BE649DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadBridge.Core.Application", "LeadBridge.Core.Application\LeadBridge.Core.Application.csproj", "{F28AF537-32A0-4917-AE9F-5EB334D8E2BF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B413A063-DF7A-46EF-91F4-096F1BE649DB} = {B413A063-DF7A-46EF-91F4-096F1BE649DB}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeadBridge.Core.Infrastructure.Postgres", "LeadBridge.Core.Infrastructure.Postgres\LeadBridge.Core.Infrastructure.Postgres.csproj", "{2891907E-9DD0-4CD7-AB90-603787A55898}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F28AF537-32A0-4917-AE9F-5EB334D8E2BF} = {F28AF537-32A0-4917-AE9F-5EB334D8E2BF}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{880395D5-5150-4F0D-980D-DEBD737F771A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{880395D5-5150-4F0D-980D-DEBD737F771A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{880395D5-5150-4F0D-980D-DEBD737F771A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{880395D5-5150-4F0D-980D-DEBD737F771A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B413A063-DF7A-46EF-91F4-096F1BE649DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B413A063-DF7A-46EF-91F4-096F1BE649DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B413A063-DF7A-46EF-91F4-096F1BE649DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B413A063-DF7A-46EF-91F4-096F1BE649DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F28AF537-32A0-4917-AE9F-5EB334D8E2BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F28AF537-32A0-4917-AE9F-5EB334D8E2BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F28AF537-32A0-4917-AE9F-5EB334D8E2BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F28AF537-32A0-4917-AE9F-5EB334D8E2BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2891907E-9DD0-4CD7-AB90-603787A55898}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2891907E-9DD0-4CD7-AB90-603787A55898}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2891907E-9DD0-4CD7-AB90-603787A55898}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2891907E-9DD0-4CD7-AB90-603787A55898}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

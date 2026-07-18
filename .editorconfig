@@ -1,0 +1,15 @@
+root = true
+
+[*.cs]
+dotnet_diagnostic.SA1633.severity = none
+dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1601.severity = none
+dotnet_diagnostic.SA1602.severity = none
+dotnet_diagnostic.SA1309.severity = none
+dotnet_diagnostic.SA1200.severity = none
+dotnet_diagnostic.SA1206.severity = none
+dotnet_diagnostic.SA1516.severity = none
+
+
+#catch problem CA1031
+dotnet_diagnostic.CA1031.severity = none

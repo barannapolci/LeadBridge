@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="Serilog" />
+    <PackageReference Include="Serilog.AspNetCore" />
+    <PackageReference Include="Serilog.Sinks.Console" />
+    <PackageReference Include="Serilog.Sinks.Debug" />
+    <PackageReference Include="Serilog.Sinks.Seq" />
+  </ItemGroup>
+</Project>

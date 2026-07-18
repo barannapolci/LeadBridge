@@ -1,0 +1,13 @@
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Infrastructure.Postgres\bin\Debug\net10.0\LeadBridge.Core.Infrastructure.Postgres.deps.json
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Infrastructure.Postgres\bin\Debug\net10.0\LeadBridge.Core.Infrastructure.Postgres.dll
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Infrastructure.Postgres\bin\Debug\net10.0\LeadBridge.Core.Infrastructure.Postgres.pdb
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Infrastructure.Postgres\obj\Debug\net10.0\LeadBridge.Core.Infrastructure.Postgres.GeneratedMSBuildEditorConfig.editorconfig
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Infrastructure.Postgres\obj\Debug\net10.0\LeadBridge.Core.Infrastructure.Postgres.AssemblyInfoInputs.cache
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Infrastructure.Postgres\obj\Debug\net10.0\LeadBridge.Core.Infrastructure.Postgres.AssemblyInfo.cs
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Infrastructure.Postgres\obj\Debug\net10.0\LeadBridge.Core.Infrastructure.Postgres.csproj.CoreCompileInputs.cache
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Infrastructure.Postgres\obj\Debug\net10.0\LeadBridge.Core.Infrastructure.Postgres.dll
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Infrastructure.Postgres\obj\Debug\net10.0\refint\LeadBridge.Core.Infrastructure.Postgres.dll
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Infrastructure.Postgres\obj\Debug\net10.0\LeadBridge.Core.Infrastructure.Postgres.pdb
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Infrastructure.Postgres\obj\Debug\net10.0\ref\LeadBridge.Core.Infrastructure.Postgres.dll
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Infrastructure.Postgres\bin\Debug\net10.0\LeadBridge.Core.Infrastructure.Postgres.xml
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Infrastructure.Postgres\obj\Debug\net10.0\LeadBridge.Core.Infrastructure.Postgres.xml

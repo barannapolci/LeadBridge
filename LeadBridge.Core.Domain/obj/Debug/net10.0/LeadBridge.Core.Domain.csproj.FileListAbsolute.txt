@@ -1,0 +1,13 @@
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Domain\bin\Debug\net10.0\LeadBridge.Core.Domain.deps.json
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Domain\bin\Debug\net10.0\LeadBridge.Core.Domain.dll
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Domain\bin\Debug\net10.0\LeadBridge.Core.Domain.pdb
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Domain\obj\Debug\net10.0\LeadBridge.Core.Domain.GeneratedMSBuildEditorConfig.editorconfig
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Domain\obj\Debug\net10.0\LeadBridge.Core.Domain.AssemblyInfoInputs.cache
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Domain\obj\Debug\net10.0\LeadBridge.Core.Domain.AssemblyInfo.cs
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Domain\obj\Debug\net10.0\LeadBridge.Core.Domain.csproj.CoreCompileInputs.cache
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Domain\obj\Debug\net10.0\LeadBridge.Core.Domain.dll
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Domain\obj\Debug\net10.0\refint\LeadBridge.Core.Domain.dll
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Domain\obj\Debug\net10.0\LeadBridge.Core.Domain.pdb
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Domain\obj\Debug\net10.0\ref\LeadBridge.Core.Domain.dll
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Domain\bin\Debug\net10.0\LeadBridge.Core.Domain.xml
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Domain\obj\Debug\net10.0\LeadBridge.Core.Domain.xml

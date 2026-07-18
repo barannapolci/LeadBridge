@@ -1,0 +1,13 @@
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Application\bin\Debug\net10.0\LeadBridge.Core.Application.deps.json
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Application\bin\Debug\net10.0\LeadBridge.Core.Application.dll
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Application\bin\Debug\net10.0\LeadBridge.Core.Application.pdb
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Application\obj\Debug\net10.0\LeadBridge.Core.Application.GeneratedMSBuildEditorConfig.editorconfig
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Application\obj\Debug\net10.0\LeadBridge.Core.Application.AssemblyInfoInputs.cache
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Application\obj\Debug\net10.0\LeadBridge.Core.Application.AssemblyInfo.cs
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Application\obj\Debug\net10.0\LeadBridge.Core.Application.csproj.CoreCompileInputs.cache
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Application\obj\Debug\net10.0\LeadBridge.Core.Application.dll
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Application\obj\Debug\net10.0\refint\LeadBridge.Core.Application.dll
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Application\obj\Debug\net10.0\LeadBridge.Core.Application.pdb
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Application\obj\Debug\net10.0\ref\LeadBridge.Core.Application.dll
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Application\bin\Debug\net10.0\LeadBridge.Core.Application.xml
+E:\Practice net core\LeadBridge\LeadBridge\LeadBridge.Core.Application\obj\Debug\net10.0\LeadBridge.Core.Application.xml
