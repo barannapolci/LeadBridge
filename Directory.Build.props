@@ -18,6 +18,7 @@
         <EnableNETAnalyzers>true</EnableNETAnalyzers>
         <EnableStyleCopAnalyzers>true</EnableStyleCopAnalyzers>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
     </PropertyGroup>
     
 </Project>

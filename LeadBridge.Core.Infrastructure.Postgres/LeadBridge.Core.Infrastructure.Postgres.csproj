@@ -1,9 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" />
     <PackageReference Include="Serilog" />
     <PackageReference Include="Serilog.AspNetCore" />
     <PackageReference Include="Serilog.Sinks.Console" />
     <PackageReference Include="Serilog.Sinks.Debug" />
     <PackageReference Include="Serilog.Sinks.Seq" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LeadBridge.Core.Domain\LeadBridge.Core.Domain.csproj" />
   </ItemGroup>
 </Project>
