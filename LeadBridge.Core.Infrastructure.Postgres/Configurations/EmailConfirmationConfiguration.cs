@@ -8,8 +8,6 @@ namespace LeadBridge.Core.Infrastructure.Postgres.Configurations
     {
         public void Configure(EntityTypeBuilder<EmailConfirmation> builder)
         {
-            ArgumentNullException.ThrowIfNull(builder);
-
             builder.HasKey(e => e.Id);
 
             builder.HasOne(e => e.User)

@@ -8,8 +8,6 @@ public class ReviewsConfiguration : IEntityTypeConfiguration<Reviews>
 {
     public void Configure(EntityTypeBuilder<Reviews> builder)
     {
-        ArgumentNullException.ThrowIfNull(builder);
-
         builder.HasKey(r => r.Id);
 
         builder.HasOne(r => r.Sender)
@@ -18,7 +16,7 @@ public class ReviewsConfiguration : IEntityTypeConfiguration<Reviews>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(r => r.Recipient)
-            .WithMany(u => u.RecivedReviews)
+            .WithMany(u => u.ReceivedReviews)
             .HasForeignKey(r => r.RecipientId)
             .OnDelete(DeleteBehavior.Restrict);
 

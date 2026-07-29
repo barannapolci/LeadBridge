@@ -26,7 +26,7 @@ public class PersonalInfo
     public string FirstName { get; private set; } = string.Empty;
     public string LastName { get; private set; } = string.Empty;
     public int Year { get; private set; }
-    public string? Country { get; private set; }
+    public string Country { get; private set; } = string.Empty;
     public string? Region { get; private set; }
     public string? City { get; private set; }
 
@@ -37,6 +37,11 @@ public class PersonalInfo
         if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
         {
             return Result.Failure<PersonalInfo>("first or last name can not be empty");
+        }
+
+        if (string.IsNullOrEmpty(country))
+        {
+            return Result.Failure<PersonalInfo>("country can not be empty");
         }
 
         if (year < 1950 || year > DateTime.UtcNow.Year)
