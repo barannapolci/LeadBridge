@@ -6,7 +6,7 @@ using CSharpFunctionalExtensions;
 /// </summary>
 public class User
 {
-    private readonly List<Reviews> _recivedReviews = new();
+    private readonly List<Reviews> _receivedReviews = new();
     private readonly List<Reviews> _givenReviews = new();
     private User()
     {
@@ -35,7 +35,7 @@ public class User
     public Guid? AvatarId { get; private set; }
     public Avatar? Avatar { get; private set; }
 
-    public IReadOnlyCollection<Reviews> RecivedReviews => _recivedReviews.AsReadOnly();
+    public IReadOnlyCollection<Reviews> ReceivedReviews => _receivedReviews.AsReadOnly();
     public IReadOnlyCollection<Reviews> GivenReviews => _givenReviews.AsReadOnly();
 
     public static Result<User> Create(string email, string passwordHash, UserRole userRole)

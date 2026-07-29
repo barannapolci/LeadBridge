@@ -18,3 +18,6 @@ dotnet_diagnostic.SA1101.severity = none
 dotnet_diagnostic.CA1031.severity = none
 
 trim_trailing_whitespace = true
+
+# check public parameters for null 
+dotnet_diagnostic.CA1062.severity = none

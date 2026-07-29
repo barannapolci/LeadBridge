@@ -24,9 +24,9 @@ public class EmailConfirmation
 
     public string ConfirmationToken { get; private set; } = string.Empty;
 
-    public DateTime CreateDate { get; private set; } = DateTime.UtcNow;
+    public DateTime CreateDate { get; private set; }
 
-    public DateTime ExpireDate { get; private set; } = DateTime.UtcNow;
+    public DateTime ExpireDate { get; private set; }
 
     public static Result<EmailConfirmation> Create(string confirmationToken, Guid userId)
     {
