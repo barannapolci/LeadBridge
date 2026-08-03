@@ -20,14 +20,10 @@ public class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new UserConfiguration());
-        modelBuilder.ApplyConfiguration(new AvatarConfiguration());
-        modelBuilder.ApplyConfiguration(new PersonalInfoConfiguration());
-        modelBuilder.ApplyConfiguration(new EmailConfirmationConfiguration());
-        modelBuilder.ApplyConfiguration(new BusinessTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new ReviewsConfiguration());
-
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
         SeedBusinessType(modelBuilder);
     }
 
