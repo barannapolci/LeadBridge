@@ -1,4 +1,6 @@
 using System.Globalization;
+using LeadBridge.Core.Infrastructure.Postgres;
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using Serilog;
 
@@ -15,6 +17,9 @@ try
         .ReadFrom.Services(services));
     builder.Services.AddControllers();
     builder.Services.AddOpenApi();
+
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
     WebApplication app = builder.Build();
 
