@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" />
@@ -18,10 +18,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
+      <ProjectReference Include="..\LeadBridge.Core.Infrastructure.Postgres\LeadBridge.Core.Infrastructure.Postgres.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\LeadBridge.Core.Infrastructure.Postgres\LeadBridge.Core.Infrastructure.Postgres.csproj" />
+      <Folder Include="Controllers\" />
     </ItemGroup>
 </Project>
