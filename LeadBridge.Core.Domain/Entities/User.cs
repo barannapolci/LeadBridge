@@ -12,7 +12,7 @@ public class User
     {
     }
 
-    private User(Guid id, string email, string passwordHash, UserRole userRole)
+    private User(Guid id, string email, string passwordHash, UserRole userRole, PersonalInfo personalInfo)
     {
         Id = id;
         Email = email;
@@ -21,6 +21,7 @@ public class User
         IsEmailConfirmed = false;
         RegisterDate = DateTime.UtcNow;
         AvgReviews = 0;
+        PersonalInfo = personalInfo;
     }
 
     public Guid Id { get; private set; }
@@ -38,8 +39,13 @@ public class User
     public IReadOnlyCollection<Reviews> ReceivedReviews => _receivedReviews.AsReadOnly();
     public IReadOnlyCollection<Reviews> GivenReviews => _givenReviews.AsReadOnly();
 
-    public static Result<User> Create(string email, string passwordHash, UserRole userRole)
+    public static Result<User> Create(string email, string passwordHash, UserRole userRole, PersonalInfo personalInfo)
     {
+        if (personalInfo is null)
+        {
+            return Result.Failure<User>("personalInfo can not be null");
+        }
+
         if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(passwordHash))
         {
             return Result.Failure<User>("email or password is empty");
@@ -50,7 +56,7 @@ public class User
             return Result.Failure<User>("email has not correct format");
         }
 
-        User user = new User(Guid.NewGuid(), email, passwordHash, userRole);
+        User user = new User(Guid.NewGuid(), email, passwordHash, userRole, personalInfo);
         return Result.Success<User>(user);
     }
 
