@@ -1,10 +1,13 @@
 using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Components.RenderTree;
+using Serilog.Configuration;
 
 namespace LeadBridge.Core.Domain.Entities;
 
 public class PersonalInfo
 {
+    public const int MinimalYear = 1950;
+
     private readonly List<BusinessType> _businessTypes = new();
 
     private PersonalInfo()
@@ -44,7 +47,7 @@ public class PersonalInfo
             return Result.Failure<PersonalInfo>("country,region or city can not be empty");
         }
 
-        if (year < 1950 || year > DateTime.UtcNow.Year)
+        if (year < MinimalYear || year > DateTime.UtcNow.Year)
         {
             return Result.Failure<PersonalInfo>($"year can not be  less than 1950 or  greater than {DateTime.UtcNow.Year}");
         }

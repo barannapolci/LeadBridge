@@ -14,6 +14,8 @@ dotnet_diagnostic.SA1206.severity = none
 dotnet_diagnostic.SA1516.severity = none
 dotnet_diagnostic.SA1028.severity = none
 dotnet_diagnostic.SA1101.severity = none
+dotnet_diagnostic.SA1133.severity = none
+
 #catch problem CA1031
 dotnet_diagnostic.CA1031.severity = none
 
