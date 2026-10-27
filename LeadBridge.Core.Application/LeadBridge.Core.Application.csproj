@@ -7,10 +7,6 @@
     <PackageReference Include="Serilog.Sinks.Seq" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\LeadBridge.Core.Domain\LeadBridge.Core.Domain.csproj" />
   </ItemGroup>
 </Project>
