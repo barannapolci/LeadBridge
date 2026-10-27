@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using LeadBridge.Core.Application.Validation;
+using LeadBridge.Core.Domain.Entities;
 
 namespace LeadBridge.Core.Application.DTOs.Account
 {
@@ -28,6 +29,8 @@ namespace LeadBridge.Core.Application.DTOs.Account
 
         [Required, MaxLength(250)]
         public required string City { get; init; }
-        public Uri? AvatarURL { get; init; }
+
+        [EnumDataType(typeof(UserRole))]
+        public required UserRole Role { get; init;  }
     }
 }
