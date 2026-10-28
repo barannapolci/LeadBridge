@@ -32,6 +32,7 @@ try
     builder.Services.AddScoped<IUserRepository, UserRepository>();
     builder.Services.AddScoped<IAccountService, AccountService>();
     builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
+    builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 
     builder.Services
     .AddOptions<JwtSettings>()
