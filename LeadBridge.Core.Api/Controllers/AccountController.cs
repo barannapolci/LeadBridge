@@ -1,4 +1,5 @@
-﻿using LeadBridge.Core.Application.DTOs.Account;
+﻿using CSharpFunctionalExtensions;
+using LeadBridge.Core.Application.DTOs.Account;
 using LeadBridge.Core.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,19 @@ namespace LeadBridge.Core.Api.Controllers
             }
 
             return Ok();
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _accountService.LoginAsync(request, cancellationToken);
+
+            if (result.IsFailure)
+            {
+                return Unauthorized(result.Error);
+            }
+
+            return Ok(result.Value);
         }
     }
 }

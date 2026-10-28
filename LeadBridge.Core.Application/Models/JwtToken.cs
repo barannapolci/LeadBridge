@@ -5,7 +5,7 @@
         public JwtToken(string value, DateTime expiresAtUtc)
         {
             Value = value;
-            expiresAtUtc = ExpiresAtUtc;
+            ExpiresAtUtc = expiresAtUtc;
         }
 
         public string Value { get; init; }

@@ -11,11 +11,12 @@ namespace LeadBridge.Core.Application.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
-
-        public AccountService(IUserRepository userRepository, IPasswordHasher passwordHasher)
+        private readonly IJwtTokenGenerator _jwtTokenGenerator;
+        public AccountService(IUserRepository userRepository, IPasswordHasher passwordHasher, IJwtTokenGenerator jwtTokenGenerator)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
+            _jwtTokenGenerator = jwtTokenGenerator;
         }
 
         public async Task<Result> RegisterAsync(RegisterRequest request, CancellationToken cancellationToken = default)
@@ -58,6 +59,34 @@ namespace LeadBridge.Core.Application.Services
             var user = userResult.Value;
 
             return await _userRepository.AddAsync(user, cancellationToken);
+        }
+
+        public async Task<Result<AuthResponse>> LoginAsync(LoginRequest loginRequest, CancellationToken cancellationToken = default)
+        {
+            string email = loginRequest.Email.Trim().ToLowerInvariant();
+
+            var userResult = await _userRepository.FindByEmailAsync(email, cancellationToken);
+
+            if (userResult.HasNoValue)
+            {
+                return Result.Failure<AuthResponse>("Invalid email or password.");
+            }
+
+            var user = userResult.Value;
+
+            if (!_passwordHasher.Verify(loginRequest.Password, user.PasswordHash))
+            {
+                return Result.Failure<AuthResponse>("Invalid email or password.");
+            }
+
+            if (!user.IsEmailConfirmed)
+            {
+                return Result.Failure<AuthResponse>("confirm email to login in");
+            }
+
+            var token = _jwtTokenGenerator.Generate(user);
+
+            return Result.Success(new AuthResponse(token.Value, token.ExpiresAtUtc));
         }
     }
 }
