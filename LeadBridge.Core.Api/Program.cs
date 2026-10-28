@@ -33,6 +33,12 @@ try
     builder.Services.AddScoped<IAccountService, AccountService>();
     builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
+    builder.Services
+    .AddOptions<JwtSettings>()
+    .Bind(builder.Configuration.GetSection(JwtSettings.SectionName))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
     WebApplication app = builder.Build();
 
     if (app.Environment.IsDevelopment())
