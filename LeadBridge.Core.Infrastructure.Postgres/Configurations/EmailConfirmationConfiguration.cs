@@ -14,6 +14,9 @@ namespace LeadBridge.Core.Infrastructure.Postgres.Configurations
                 .WithOne()
                 .HasForeignKey<EmailConfirmation>(e => e.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property(e => e.ConfirmationToken).IsRequired().HasMaxLength(100);
+            builder.HasIndex(e => e.ConfirmationToken).IsUnique();
         }
     }
 }

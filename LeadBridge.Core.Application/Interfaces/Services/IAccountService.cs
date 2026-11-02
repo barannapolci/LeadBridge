@@ -8,5 +8,7 @@ namespace LeadBridge.Core.Application.Interfaces.Services
         Task<Result> RegisterAsync(RegisterRequest request, CancellationToken cancellationToken = default);
 
         Task<Result<AuthResponse>> LoginAsync(LoginRequest loginRequest, CancellationToken cancellationToken = default);
+
+        Task<Result> ConfirmEmailAsync(string token, CancellationToken cancellationToken = default);
     }
 }

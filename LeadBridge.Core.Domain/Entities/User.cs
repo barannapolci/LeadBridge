@@ -69,4 +69,9 @@ public class User
     {
         PersonalInfoId = personalInfoId;
     }
+
+    public void ConfirmEmail()
+    {
+        IsEmailConfirmed = true;
+    }
 }
