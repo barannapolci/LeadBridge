@@ -1,4 +1,6 @@
 using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using LeadBridge.Core.Application.Interfaces;
 using LeadBridge.Core.Application.Interfaces.Repositories;
 using LeadBridge.Core.Application.Interfaces.Security;
@@ -7,7 +9,10 @@ using LeadBridge.Core.Application.Services;
 using LeadBridge.Core.Infrastructure.Postgres;
 using LeadBridge.Core.Infrastructure.Postgres.Repositories;
 using LeadBridge.Core.Infrastructure.Postgres.Security;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using Serilog;
 
@@ -40,6 +45,34 @@ try
     .ValidateDataAnnotations()
     .ValidateOnStart();
 
+    builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer();
+
+    builder.Services
+        .AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme)
+        .Configure<IOptions<JwtSettings>>((bearer, jwtOptions) =>
+        {
+            var jwt = jwtOptions.Value;
+
+            bearer.MapInboundClaims = false;
+            bearer.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = jwt.Issuer,
+                ValidateAudience = true,
+                ValidAudience = jwt.Audience,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.SecretKey)),
+                ClockSkew = TimeSpan.FromSeconds(30),
+                NameClaimType = JwtRegisteredClaimNames.Sub,
+                RoleClaimType = "role",
+            };
+        });
+
+    builder.Services.AddAuthorization();
+
     WebApplication app = builder.Build();
 
     if (app.Environment.IsDevelopment())
@@ -49,7 +82,7 @@ try
     }
 
     app.UseHttpsRedirection();
-
+    app.UseAuthentication();
     app.UseAuthorization();
 
     app.MapControllers();

@@ -79,10 +79,12 @@ namespace LeadBridge.Core.Application.Services
                 return Result.Failure<AuthResponse>("Invalid email or password.");
             }
 
+            /*
             if (!user.IsEmailConfirmed)
             {
                 return Result.Failure<AuthResponse>("confirm email to login in");
             }
+            */
 
             var token = _jwtTokenGenerator.Generate(user);
 
