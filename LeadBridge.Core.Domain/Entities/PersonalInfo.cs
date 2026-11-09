@@ -7,13 +7,13 @@ namespace LeadBridge.Core.Domain.Entities;
 public class PersonalInfo
 {
     public const int MinimalYear = 1950;
+    public const int GlobalMaxLength = 300;
 
     private readonly List<BusinessType> _businessTypes = new();
-
     private PersonalInfo()
     {
     }
-
+    
     private PersonalInfo(Guid id, string firstName, string lastName, int year, string country, string region, string city)
     {
         Id = id;
@@ -24,7 +24,7 @@ public class PersonalInfo
         LastName = lastName;
         Year = year;
     }
-
+    
     public Guid Id { get; private set; }
     public string FirstName { get; private set; } = string.Empty;
     public string LastName { get; private set; } = string.Empty;
@@ -37,19 +37,11 @@ public class PersonalInfo
 
     public static Result<PersonalInfo> Create(string firstName, string lastName, int year, string country, string region, string city)
     {
-        if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))
-        {
-            return Result.Failure<PersonalInfo>("first or last name can not be empty");
-        }
+        var validatorRes = DataValidator(firstName, lastName, year, country, region, city);
 
-        if (string.IsNullOrWhiteSpace(country) || string.IsNullOrWhiteSpace(region) || string.IsNullOrWhiteSpace(city))
+        if (validatorRes.IsFailure)
         {
-            return Result.Failure<PersonalInfo>("country,region or city can not be empty");
-        }
-
-        if (year < MinimalYear || year > DateTime.UtcNow.Year)
-        {
-            return Result.Failure<PersonalInfo>($"year can not be  less than 1950 or  greater than {DateTime.UtcNow.Year}");
+            return Result.Failure<PersonalInfo>(validatorRes.Error);
         }
 
         var personalInfo = new PersonalInfo(Guid.NewGuid(), firstName, lastName, year, country, region, city);
@@ -76,6 +68,55 @@ public class PersonalInfo
         }
 
         _businessTypes.Remove(businessType);
+        return Result.Success();
+    }
+
+    public Result Update(string firstName, string lastName, int year, string country, string region, string city)
+    {
+        var validatorRes = DataValidator(firstName, lastName, year, country, region, city);
+
+        if (validatorRes.IsFailure)
+        {
+            return Result.Failure<PersonalInfo>(validatorRes.Error);
+        }
+
+        Country = country;
+        Region = region;
+        City = city;
+        FirstName = firstName;
+        LastName = lastName;
+        Year = year;
+        
+        return Result.Success();
+    }
+
+    private static Result DataValidator(string firstName, string lastName, int year, string country, string region, string city)
+    {
+        if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))
+        {
+            return Result.Failure("first or last name can not be empty");
+        }
+        
+        if (firstName.Length >= GlobalMaxLength || lastName.Length >= GlobalMaxLength)
+        {
+            return Result.Failure("first or last max length 300");
+        }
+
+        if (string.IsNullOrWhiteSpace(country) || string.IsNullOrWhiteSpace(region) || string.IsNullOrWhiteSpace(city))
+        {
+            return Result.Failure("country,region or city can not be empty");
+        }
+        
+        if (country.Length >= GlobalMaxLength || region.Length >= GlobalMaxLength || city.Length >= GlobalMaxLength)
+        {
+            return Result.Failure("country,region or city have maxLength = 300");
+        }
+
+        if (year < MinimalYear || year > DateTime.UtcNow.Year)
+        {
+            return Result.Failure($"year can not be  less than 1950 or  greater than {DateTime.UtcNow.Year}");
+        }
+
         return Result.Success();
     }
 }
