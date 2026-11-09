@@ -12,22 +12,22 @@ namespace LeadBridge.Core.Application.DTOs.Account
         [Required, MaxLength(100)]
         public required string Password { get; init; }
 
-        [Required, MaxLength(70)]
+        [Required, MaxLength(PersonalInfo.GlobalMaxLength)]
         public required string FirstName { get; init; }
 
-        [Required, MaxLength(70)]
+        [Required, MaxLength(PersonalInfo.GlobalMaxLength)]
         public required string LastName { get; init; }
 
         [Required, BirthYear]
         public required int Year { get; init;  }
 
-        [Required, MaxLength(250)]
+        [Required, MaxLength(PersonalInfo.GlobalMaxLength)]
         public required string Country { get; init; }
 
-        [Required, MaxLength(250)]
+        [Required, MaxLength(PersonalInfo.GlobalMaxLength)]
         public required string Region { get; init; } 
 
-        [Required, MaxLength(250)]
+        [Required, MaxLength(PersonalInfo.GlobalMaxLength)]
         public required string City { get; init; }
 
         [EnumDataType(typeof(UserRole))]
