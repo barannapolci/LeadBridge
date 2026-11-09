@@ -4,7 +4,7 @@ using LeadBridge.Core.Domain.Entities;
 
 namespace LeadBridge.Core.Application.DTOs.Profile
 {
-    public class ProfileForm
+    public class UpdateProfileRequest
     {
         [Required, MaxLength(PersonalInfo.GlobalMaxLength)]
         public required string FirstName { get; init; }
