@@ -1,5 +1,4 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using CSharpFunctionalExtensions;
 using LeadBridge.Core.Application.DTOs.Account;
 using LeadBridge.Core.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
