@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using LeadBridge.Core.Domain.Entities;
+using LeadBridge.Core.Domain.ValueObjects;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

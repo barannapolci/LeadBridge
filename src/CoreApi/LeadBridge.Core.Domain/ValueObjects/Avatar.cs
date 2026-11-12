@@ -1,6 +1,6 @@
 using CSharpFunctionalExtensions;
 
-namespace LeadBridge.Core.Domain.Entities;
+namespace LeadBridge.Core.Domain.ValueObjects;
 
 public sealed class Avatar
 {

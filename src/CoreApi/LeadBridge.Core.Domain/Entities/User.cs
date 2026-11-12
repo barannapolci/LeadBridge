@@ -2,6 +2,7 @@ namespace LeadBridge.Core.Domain.Entities;
 
 using CSharpFunctionalExtensions;
 using LeadBridge.Core.Domain.Enums;
+using LeadBridge.Core.Domain.ValueObjects;
 
 public class User
 {
