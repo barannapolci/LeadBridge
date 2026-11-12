@@ -3,9 +3,6 @@ namespace LeadBridge.Core.Domain.Entities;
 using CSharpFunctionalExtensions;
 using LeadBridge.Core.Domain.Enums;
 
-/// <summary>
-/// User entity with information for register and login.
-/// </summary>
 public class User
 {
     private readonly List<Reviews> _receivedReviews = new();
@@ -35,7 +32,6 @@ public class User
     public UserRole UserRole { get;  private set; }
     public DateTime RegisterDate { get;  private set; }
     public double AvgReviews { get;  private set; }
-    public Guid? AvatarId { get; private set; }
     public Avatar? Avatar { get; private set; }
 
     public IReadOnlyCollection<Reviews> ReceivedReviews => _receivedReviews.AsReadOnly();
@@ -62,9 +58,23 @@ public class User
         return Result.Success<User>(user);
     }
 
-    public void SetAvatar(Guid avatarId)
+    public Result SetAvatar(string avatarLink)
     {
-        AvatarId = avatarId;
+        var avatarResult = Avatar.Create(avatarLink);
+
+        if (avatarResult.IsFailure)
+        {
+            return Result.Failure(avatarResult.Error);
+        }
+
+        Avatar = avatarResult.Value;
+
+        return Result.Success();
+    }
+
+    public void RemoveAvatar()
+    {
+        Avatar = null;
     }
 
     public void SetPersonalInfo(Guid personalInfoId)

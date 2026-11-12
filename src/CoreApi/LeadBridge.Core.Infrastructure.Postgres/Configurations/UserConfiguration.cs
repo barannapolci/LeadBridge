@@ -20,8 +20,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .WithOne()
             .HasForeignKey<User>(u => u.PersonalInfoId);
 
-        builder.HasOne(u => u.Avatar)
-            .WithOne()
-            .HasForeignKey<User>(u => u.AvatarId);
+        builder.OwnsOne(u => u.Avatar, avatar =>
+        {
+            avatar.Property(a => a.AvatarLink)
+            .HasColumnName("AvatarLink")
+            .HasMaxLength(Avatar.MaxLength);
+        }); 
     }
 }

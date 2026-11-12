@@ -1,6 +1,6 @@
 namespace LeadBridge.Core.Domain.Enums;
 
-public enum Status
+public enum RequestStatus
 {
     Draft = 0,
     Active = 1,

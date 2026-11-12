@@ -15,7 +15,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<PersonalInfo> PersonalInfos => Set<PersonalInfo>();
     public DbSet<Reviews> Reviews => Set<Reviews>();
     public DbSet<BusinessType> BusinessTypes => Set<BusinessType>();
-    public DbSet<Avatar> Avatars => Set<Avatar>();
     public DbSet<EmailConfirmation> EmailConfirmation => Set<EmailConfirmation>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

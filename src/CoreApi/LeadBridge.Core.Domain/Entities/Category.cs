@@ -3,20 +3,19 @@ namespace LeadBridge.Core.Domain.Entities;
 public class Category
 {
     public const int MaxLengthOfCategoryName = 250;
-    private readonly List<AttributeDefinition> _attributeDefinitions = new();
+    public const int MaxLengthOfCategoryKey = 100;
+
+    private readonly List<AttributeDefinition> _attributes = new();
 
     private Category()
     {
     }
 
-    private Category(Guid id, string name)
-    {
-        Id = id;
-        Name = name;
-    }
-
     public Guid Id { get; private set; }
-    
-    public IReadOnlyList<AttributeDefinition> Attributes => _attributeDefinitions.AsReadOnly();
+
+    public string Key { get; private set; } = string.Empty;
+
     public string Name { get; private set; } = string.Empty;
+
+    public IReadOnlyList<AttributeDefinition> Attributes => _attributes.AsReadOnly();
 }
