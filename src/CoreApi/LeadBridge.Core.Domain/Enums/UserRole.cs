@@ -1,4 +1,4 @@
-namespace LeadBridge.Core.Domain.Entities;
+namespace LeadBridge.Core.Domain.Enums;
 
 /// <summary>
 /// defines the role of user in the system (Client or Manager).

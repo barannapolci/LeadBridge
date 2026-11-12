@@ -1,5 +1,7 @@
 namespace LeadBridge.Core.Domain.Entities;
+
 using CSharpFunctionalExtensions;
+using LeadBridge.Core.Domain.Enums;
 
 /// <summary>
 /// User entity with information for register and login.
