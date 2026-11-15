@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using LeadBridge.Core.Domain.Entities;
+using LeadBridge.Core.Domain.ValueObjects;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -20,8 +21,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .WithOne()
             .HasForeignKey<User>(u => u.PersonalInfoId);
 
-        builder.HasOne(u => u.Avatar)
-            .WithOne()
-            .HasForeignKey<User>(u => u.AvatarId);
+        builder.OwnsOne(u => u.Avatar, avatar =>
+        {
+            avatar.Property(a => a.AvatarLink)
+            .HasColumnName("AvatarLink")
+            .HasMaxLength(Avatar.MaxLength);
+        }); 
     }
 }

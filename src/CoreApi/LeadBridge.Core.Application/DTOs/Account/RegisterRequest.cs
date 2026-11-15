@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using LeadBridge.Core.Application.Validation;
 using LeadBridge.Core.Domain.Entities;
-
+using LeadBridge.Core.Domain.Enums;
 namespace LeadBridge.Core.Application.DTOs.Account
 {
     public class RegisterRequest
