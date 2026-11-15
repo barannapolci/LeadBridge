@@ -16,7 +16,10 @@ public class ApplicationDbContext : DbContext
     public DbSet<Reviews> Reviews => Set<Reviews>();
     public DbSet<BusinessType> BusinessTypes => Set<BusinessType>();
     public DbSet<EmailConfirmation> EmailConfirmation => Set<EmailConfirmation>();
-
+    public DbSet<Category> Categories => Set<Category>();
+    public DbSet<AttributeDefinition> AttributeDefinitions => Set<AttributeDefinition>();
+    public DbSet<Request> Requests => Set<Request>();
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

@@ -37,20 +37,42 @@ namespace LeadBridge.Core.Infrastructure.Postgres.Migrations
                     b.ToTable("BusinessTypePersonalInfo");
                 });
 
-            modelBuilder.Entity("LeadBridge.Core.Domain.Entities.Avatar", b =>
+            modelBuilder.Entity("LeadBridge.Core.Domain.Entities.AttributeDefinition", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("AvatarLink")
+                    b.PrimitiveCollection<string[]>("AllowedValues")
                         .IsRequired()
-                        .HasMaxLength(2200)
-                        .HasColumnType("character varying(2200)");
+                        .HasColumnType("text[]");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Unit")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Avatars");
+                    b.HasIndex("CategoryId", "Key")
+                        .IsUnique();
+
+                    b.ToTable("AttributeDefinitions");
                 });
 
             modelBuilder.Entity("LeadBridge.Core.Domain.Entities.BusinessType", b =>
@@ -171,6 +193,30 @@ namespace LeadBridge.Core.Infrastructure.Postgres.Migrations
                         });
                 });
 
+            modelBuilder.Entity("LeadBridge.Core.Domain.Entities.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Key")
+                        .IsUnique();
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("LeadBridge.Core.Domain.Entities.EmailConfirmation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -205,6 +251,7 @@ namespace LeadBridge.Core.Infrastructure.Postgres.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
@@ -224,6 +271,7 @@ namespace LeadBridge.Core.Infrastructure.Postgres.Migrations
                         .HasColumnType("character varying(70)");
 
                     b.Property<string>("Region")
+                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
@@ -233,6 +281,35 @@ namespace LeadBridge.Core.Infrastructure.Postgres.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PersonalInfos");
+                });
+
+            modelBuilder.Entity("LeadBridge.Core.Domain.Entities.Request", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Side")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Version")
+                        .IsConcurrencyToken()
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("Requests");
                 });
 
             modelBuilder.Entity("LeadBridge.Core.Domain.Entities.Reviews", b =>
@@ -269,9 +346,6 @@ namespace LeadBridge.Core.Infrastructure.Postgres.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("AvatarId")
-                        .HasColumnType("uuid");
-
                     b.Property<double>("AvgReviews")
                         .HasColumnType("double precision");
 
@@ -298,9 +372,6 @@ namespace LeadBridge.Core.Infrastructure.Postgres.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AvatarId")
-                        .IsUnique();
-
                     b.HasIndex("Email")
                         .IsUnique();
 
@@ -325,6 +396,15 @@ namespace LeadBridge.Core.Infrastructure.Postgres.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("LeadBridge.Core.Domain.Entities.AttributeDefinition", b =>
+                {
+                    b.HasOne("LeadBridge.Core.Domain.Entities.Category", null)
+                        .WithMany("Attributes")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("LeadBridge.Core.Domain.Entities.EmailConfirmation", b =>
                 {
                     b.HasOne("LeadBridge.Core.Domain.Entities.User", "User")
@@ -334,6 +414,70 @@ namespace LeadBridge.Core.Infrastructure.Postgres.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("LeadBridge.Core.Domain.Entities.Request", b =>
+                {
+                    b.HasOne("LeadBridge.Core.Domain.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.OwnsMany("LeadBridge.Core.Domain.ValueObjects.RequestItem", "Items", b1 =>
+                        {
+                            b1.Property<Guid>("RequestId");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd();
+
+                            b1.Property<string>("CategoryKey")
+                                .IsRequired();
+
+                            b1.HasKey("RequestId", "__synthesizedOrdinal");
+
+                            b1.ToTable("Requests");
+
+                            b1
+                                .ToJson("Items")
+                                .HasColumnType("jsonb");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RequestId");
+
+                            b1.OwnsMany("LeadBridge.Core.Domain.ValueObjects.Condition", "Conditions", b2 =>
+                                {
+                                    b2.Property<Guid>("RequestItemRequestId");
+
+                                    b2.Property<int>("RequestItem__synthesizedOrdinal");
+
+                                    b2.Property<int>("__synthesizedOrdinal")
+                                        .ValueGeneratedOnAdd();
+
+                                    b2.Property<string>("AttributeKey")
+                                        .IsRequired();
+
+                                    b2.Property<decimal?>("Max");
+
+                                    b2.Property<decimal?>("Min");
+
+                                    b2.Property<int>("Type");
+
+                                    b2.PrimitiveCollection<string>("Values")
+                                        .IsRequired();
+
+                                    b2.HasKey("RequestItemRequestId", "RequestItem__synthesizedOrdinal", "__synthesizedOrdinal");
+
+                                    b2.ToTable("Requests");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("RequestItemRequestId", "RequestItem__synthesizedOrdinal");
+                                });
+
+                            b1.Navigation("Conditions");
+                        });
+
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("LeadBridge.Core.Domain.Entities.Reviews", b =>
@@ -357,19 +501,39 @@ namespace LeadBridge.Core.Infrastructure.Postgres.Migrations
 
             modelBuilder.Entity("LeadBridge.Core.Domain.Entities.User", b =>
                 {
-                    b.HasOne("LeadBridge.Core.Domain.Entities.Avatar", "Avatar")
-                        .WithOne()
-                        .HasForeignKey("LeadBridge.Core.Domain.Entities.User", "AvatarId");
-
                     b.HasOne("LeadBridge.Core.Domain.Entities.PersonalInfo", "PersonalInfo")
                         .WithOne()
                         .HasForeignKey("LeadBridge.Core.Domain.Entities.User", "PersonalInfoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.OwnsOne("LeadBridge.Core.Domain.ValueObjects.Avatar", "Avatar", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("AvatarLink")
+                                .IsRequired()
+                                .HasMaxLength(2200)
+                                .HasColumnType("character varying(2200)")
+                                .HasColumnName("AvatarLink");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
                     b.Navigation("Avatar");
 
                     b.Navigation("PersonalInfo");
+                });
+
+            modelBuilder.Entity("LeadBridge.Core.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("Attributes");
                 });
 
             modelBuilder.Entity("LeadBridge.Core.Domain.Entities.User", b =>
