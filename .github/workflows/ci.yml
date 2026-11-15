@@ -1,0 +1,80 @@
+name: CI
+
+# Коли запускати:
+#  - будь-який PR, що цілиться в гілку tests
+#  - будь-який push у гілку tests (напр. після мержу PR)
+#  - вручну з вкладки Actions (працює тільки коли файл уже є в main/default гілці)
+#
+# Коли захочеш ганяти це й на main, просто додай main у списки нижче:
+#   pull_request:
+#     branches: [ tests, main ]
+#   push:
+#     branches: [ tests, main ]
+on:
+  pull_request:
+    branches: [ tests ]
+  push:
+    branches: [ tests ]
+  workflow_dispatch:
+
+# Скасовувати попередній прогін, якщо в той самий PR/гілку прилетів новий коміт
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_NOLOGO: 'true'
+  DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 'true'
+
+jobs:
+  build-and-test:
+    name: Build & test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore LeadBridge.sln
+
+      - name: Build
+        run: dotnet build LeadBridge.sln --no-restore -c Release
+
+      # Шукає всі тестові проєкти в tests/ (будь-яка глибина) і запускає кожен.
+      # Якщо папки/проєктів ще немає — крок просто пропускається без помилки.
+      - name: Test
+        run: |
+          mapfile -t projects < <(find tests -name '*.csproj' -print 2>/dev/null | sort)
+
+          if [ ${#projects[@]} -eq 0 ]; then
+            echo "::notice::No test projects found under tests/. Skipping."
+            exit 0
+          fi
+
+          for proj in "${projects[@]}"; do
+            echo "::group::dotnet test $proj"
+            dotnet test "$proj" \
+              -c Release \
+              --logger "trx;LogFileName=$(basename "$proj" .csproj).trx" \
+              --results-directory TestResults
+            echo "::endgroup::"
+          done
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: TestResults
+          if-no-files-found: ignore
