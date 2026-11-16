@@ -38,6 +38,8 @@ try
     builder.Services.AddScoped<IAccountService, AccountService>();
     builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
     builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+    builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
+    builder.Services.AddScoped<ICatalogService, CatalogService>();
 
     builder.Services
     .AddOptions<JwtSettings>()
