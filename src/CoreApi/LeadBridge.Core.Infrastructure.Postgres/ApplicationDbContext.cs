@@ -1,11 +1,14 @@
 namespace LeadBridge.Core.Infrastructure.Postgres;
 
 using LeadBridge.Core.Domain.Entities;
+using LeadBridge.Core.Domain.Enums;
 using LeadBridge.Core.Infrastructure.Postgres.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 public class ApplicationDbContext : DbContext
 {
+    private static readonly string[] ManufacturerAllowedValues = ["A", "B", "C"];
+
     public ApplicationDbContext(DbContextOptions option)
         : base(option)
     {
@@ -27,6 +30,8 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
         SeedBusinessType(modelBuilder);
+        SeedAttributeDefinition(modelBuilder);
+        SeedCategories(modelBuilder);
     }
 
     private static void SeedBusinessType(ModelBuilder modelBuilder)
@@ -128,5 +133,57 @@ public class ApplicationDbContext : DbContext
                 Name = "Оборонний сектор та ЗСУ",
                 Description = "Військові частини та обслуговування оборонної техніки.",
             });
+    }
+
+    private static void SeedCategories(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Category>().HasData(
+            new
+            {
+                Id = Guid.Parse("80000000-0000-0000-0000-000000000001"),
+                Key = "antifreeze",
+                Name = "Антифриз",
+            },
+            new
+            {
+                Id = Guid.Parse("80000000-0000-0000-0000-000000000002"),
+                Key = "combine-oil",
+                Name = "Масло для комбайна",
+            });
+    }
+
+    private static void SeedAttributeDefinition(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<AttributeDefinition>().HasData(
+        new
+        {
+            Id = Guid.Parse("90000000-0000-0000-0000-000000000001"),
+            CategoryId = Guid.Parse("80000000-0000-0000-0000-000000000001"),
+            Key = "manufacturer",
+            Name = "Виробник",
+            Type = AttributeType.Set,
+            Unit = (string?)null,
+            AllowedValues = ManufacturerAllowedValues,
+        },
+        new
+        {
+            Id = Guid.Parse("90000000-0000-0000-0000-000000000002"),
+            CategoryId = Guid.Parse("80000000-0000-0000-0000-000000000001"),
+            Key = "price",
+            Name = "Ціна",
+            Type = AttributeType.Range,
+            Unit = (string?)"грн",
+            AllowedValues = Array.Empty<string>(),
+        },
+        new
+        {
+            Id = Guid.Parse("90000000-0000-0000-0000-000000000003"),
+            CategoryId = Guid.Parse("80000000-0000-0000-0000-000000000001"),
+            Key = "volume",
+            Name = "Об'єм",
+            Type = AttributeType.Range,
+            Unit = (string?)"л",
+            AllowedValues = Array.Empty<string>(),
+        });
     }
 }
