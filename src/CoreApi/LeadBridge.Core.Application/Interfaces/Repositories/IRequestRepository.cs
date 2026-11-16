@@ -2,7 +2,7 @@ using CSharpFunctionalExtensions;
 namespace LeadBridge.Core.Application.Interfaces;
 public interface IRequestRepository
 {
-    Task<Result> CreateAsync(CancellationToken cancellationToken);
+    Task<Result> AddASync(CancellationToken cancellationToken);
 
     Task<Result> FindAllAsync(CancellationToken cancellationToken);
 
