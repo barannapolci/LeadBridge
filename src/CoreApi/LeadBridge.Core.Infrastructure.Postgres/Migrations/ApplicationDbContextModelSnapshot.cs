@@ -73,6 +73,37 @@ namespace LeadBridge.Core.Infrastructure.Postgres.Migrations
                         .IsUnique();
 
                     b.ToTable("AttributeDefinitions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("90000000-0000-0000-0000-000000000001"),
+                            AllowedValues = new[] { "A", "B", "C" },
+                            CategoryId = new Guid("80000000-0000-0000-0000-000000000001"),
+                            Key = "manufacturer",
+                            Name = "Виробник",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("90000000-0000-0000-0000-000000000002"),
+                            AllowedValues = new string[0],
+                            CategoryId = new Guid("80000000-0000-0000-0000-000000000001"),
+                            Key = "price",
+                            Name = "Ціна",
+                            Type = 0,
+                            Unit = "грн"
+                        },
+                        new
+                        {
+                            Id = new Guid("90000000-0000-0000-0000-000000000003"),
+                            AllowedValues = new string[0],
+                            CategoryId = new Guid("80000000-0000-0000-0000-000000000001"),
+                            Key = "volume",
+                            Name = "Об'єм",
+                            Type = 0,
+                            Unit = "л"
+                        });
                 });
 
             modelBuilder.Entity("LeadBridge.Core.Domain.Entities.BusinessType", b =>
@@ -215,6 +246,20 @@ namespace LeadBridge.Core.Infrastructure.Postgres.Migrations
                         .IsUnique();
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("80000000-0000-0000-0000-000000000001"),
+                            Key = "antifreeze",
+                            Name = "Антифриз"
+                        },
+                        new
+                        {
+                            Id = new Guid("80000000-0000-0000-0000-000000000002"),
+                            Key = "combine-oil",
+                            Name = "Масло для комбайна"
+                        });
                 });
 
             modelBuilder.Entity("LeadBridge.Core.Domain.Entities.EmailConfirmation", b =>

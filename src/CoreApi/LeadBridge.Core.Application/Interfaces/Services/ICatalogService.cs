@@ -4,5 +4,7 @@ using LeadBridge.Core.Application.DTOs.Request;
 namespace LeadBridge.Core.Application.Interfaces.Services;
 public interface ICatalogService
 {
-    Task<IReadOnlyList<CategoryResponse>> GetAsync(CancellationToken cancellationToken);
+    Task<IReadOnlyList<CategoryResponse>> GetAsync(CancellationToken cancellationToken = default);
+
+    Task<Result<IReadOnlyList<AttributeResponse>>> GetAttributesAsync(string key, CancellationToken cancellationToken = default);
 }

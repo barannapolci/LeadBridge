@@ -21,4 +21,14 @@ public class CatalogRepository : ICatalogRepository
             .OrderBy(c => c.Name)
             .ToListAsync(cancellationToken);
     }
+
+    public async Task<Maybe<Category>> FindByKeyWithAttributesAsync(string key, CancellationToken cancellationToken = default)
+    {
+        var category = await _context.Categories
+            .AsNoTracking()
+            .Include(c => c.Attributes)
+            .FirstOrDefaultAsync(c => c.Key == key, cancellationToken);
+
+        return Maybe.From(category);
+    }
 }
