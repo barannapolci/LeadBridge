@@ -15,7 +15,7 @@ namespace LeadBridge.Core.Application.Services
             _profileRepository = profileRepository;
         }
 
-        public async Task<Result> ChangeAsync(Guid userId, UpdateProfileRequest updateProfileRequest, CancellationToken cancellationToken)
+        public async Task<Result> ChangeAsync(Guid userId, UpdateProfileRequest updateProfileRequest, CancellationToken cancellationToken = default)
         {
             var res = await _profileRepository.FindByUserIdAsync(userId, cancellationToken);
 
@@ -32,7 +32,7 @@ namespace LeadBridge.Core.Application.Services
             return resInfo;
         }
 
-        public async Task<Result<ProfileResponse>> GetAsync(Guid userId, CancellationToken cancellationToken)
+        public async Task<Result<ProfileResponse>> GetAsync(Guid userId, CancellationToken cancellationToken = default)
         {
             var res = await _profileRepository.FindByUserIdAsync(userId, cancellationToken);            
             
