@@ -60,6 +60,18 @@ public class RequestService : IRequestService
         return requests.Select(r => r.ToResponse()).ToList();
     }
 
+    public async Task<Result<RequestResponse>> GetOwnRequestAsync(Guid userId, Guid requestId, CancellationToken cancellationToken = default)
+    {
+        var requestMaybe = await _repository.GetByIdAsync(requestId, cancellationToken);
+
+        if (requestMaybe.HasNoValue || requestMaybe.Value.OwnerId != userId)
+        {
+            return Result.Failure<RequestResponse>("request was not found");
+        }
+
+        return Result.Success(requestMaybe.Value.ToResponse());
+    }
+
     private static Result<RequestItem> BuildItem(CreateRequestItemDto itemDto)
     {
         var conditions = new List<Condition>();

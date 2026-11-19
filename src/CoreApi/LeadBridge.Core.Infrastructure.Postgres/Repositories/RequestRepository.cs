@@ -28,4 +28,11 @@ public class RequestRepository : IRequestRepository
             .OrderByDescending(r => r.CreatedAt)
             .ToListAsync(cancellationToken);
     }
+
+    public async Task<Maybe<Request>> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        var request = await _context.Requests.FirstOrDefaultAsync(r => r.Id == id, cancellationToken);
+
+        return Maybe.From(request);
+    }
 }

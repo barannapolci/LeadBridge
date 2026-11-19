@@ -60,4 +60,24 @@ public class RequestController : ControllerBase
 
         return Ok(await _requestService.GetOwnRequestsAsync(userId, cancellationToken));
     }
+
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(RequestResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<RequestResponse>> GetOneMine(Guid id, CancellationToken cancellationToken)
+    {
+        if (!Guid.TryParse(User.FindFirstValue("sub"), out var userId))
+        {
+            return Unauthorized();
+        }
+
+        var requestResult = await _requestService.GetOwnRequestAsync(userId, id, cancellationToken);
+
+        if (requestResult.IsFailure)
+        {
+            return NotFound(requestResult.Error);
+        }
+
+        return Ok(requestResult.Value);
+    }
 }
