@@ -1,6 +1,7 @@
 using CSharpFunctionalExtensions;
 using LeadBridge.Core.Application.Interfaces;
 using LeadBridge.Core.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace LeadBridge.Core.Infrastructure.Postgres.Repositories;
 public class RequestRepository : IRequestRepository
@@ -17,5 +18,14 @@ public class RequestRepository : IRequestRepository
         await _context.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
+    }
+
+    public async Task<IReadOnlyList<Request>> GetByOwnerAsync(Guid ownerId, CancellationToken cancellationToken = default)
+    {
+        return await _context.Requests
+            .AsNoTracking()
+            .Where(r => r.OwnerId == ownerId)
+            .OrderByDescending(r => r.CreatedAt)
+            .ToListAsync(cancellationToken);
     }
 }

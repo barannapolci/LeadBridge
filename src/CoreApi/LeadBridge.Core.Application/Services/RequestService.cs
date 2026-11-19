@@ -4,6 +4,7 @@ using LeadBridge.Core.Application.DTOs;
 using LeadBridge.Core.Application.DTOs.Request;
 using LeadBridge.Core.Application.Interfaces;
 using LeadBridge.Core.Application.Interfaces.Services;
+using LeadBridge.Core.Application.Mappings;
 using LeadBridge.Core.Domain.Entities;
 using LeadBridge.Core.Domain.Enums;
 using LeadBridge.Core.Domain.ValueObjects;
@@ -50,6 +51,13 @@ public class RequestService : IRequestService
         }
 
         return Result.Success(request.Id);
+    }
+
+    public async Task<IReadOnlyList<RequestResponse>> GetOwnRequestsAsync(Guid userId, CancellationToken cancellationToken = default)
+    {
+        var requests = await _repository.GetByOwnerAsync(userId, cancellationToken);
+
+        return requests.Select(r => r.ToResponse()).ToList();
     }
 
     private static Result<RequestItem> BuildItem(CreateRequestItemDto itemDto)

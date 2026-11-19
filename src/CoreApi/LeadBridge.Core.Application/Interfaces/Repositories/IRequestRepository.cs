@@ -4,4 +4,6 @@ namespace LeadBridge.Core.Application.Interfaces;
 public interface IRequestRepository
 {
     Task<Result> AddAsync(Request request, CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyList<Request>> GetByOwnerAsync(Guid ownerId, CancellationToken cancellationToken = default);
 }
