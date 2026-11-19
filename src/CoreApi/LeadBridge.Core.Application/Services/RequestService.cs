@@ -1,5 +1,6 @@
 using System.Collections;
 using CSharpFunctionalExtensions;
+using LeadBridge.Core.Application.DTOs;
 using LeadBridge.Core.Application.DTOs.Request;
 using LeadBridge.Core.Application.Interfaces;
 using LeadBridge.Core.Application.Interfaces.Services;
@@ -17,49 +18,91 @@ public class RequestService : IRequestService
         _repository = requestRepository;
     }
 
-    public async Task<Result> Create(Guid userId, RequestSide side, CreateRequestDto requestDto, CancellationToken cancellationToken = default)
+    public async Task<Result<Guid>> CreateAsync(Guid userId, RequestSide side, CreateRequestDto requestDto, CancellationToken cancellationToken = default)
     {
-        var conditions = new List<Condition>();
-        var requestItems = new List<RequestItem>();
-        foreach (var i in requestDto.Items)
+        var items = new List<RequestItem>();
+
+        for (var index = 0; index < requestDto.Items.Count; index++)
         {
-            foreach (var c in i.Conditions)
+            var itemResult = BuildItem(requestDto.Items[index]);
+
+            if (itemResult.IsFailure)
             {
-                Result<Condition> condition = c.Type switch
-                {
-                    AttributeType.Set when c.Values is not null && c.Values.Count > 0 => Condition.Set(c.AttributeKey, c.Values),
-                    AttributeType.Set => Result.Failure<Condition>("set values are required"),
-                    AttributeType.Range => Condition.Range(c.AttributeKey, c.Min, c.Max),
-                    _ => Result.Failure<Condition>("unknown attribute type"),
-
-                };
-
-                if (condition.IsFailure)
-                {
-                    return Result.Failure($"item:{i},categoryKey: {i.CategoryKey} , error{condition.Error} ");
-                }
-
-                conditions.Add(condition.Value);
+                return Result.Failure<Guid>($"items[{index}]: {itemResult.Error}");
             }
 
-            var requestItem = RequestItem.Create(i.CategoryKey, conditions);
-            
-            if (requestItem.IsFailure)
-            {
-                return Result.Failure(requestItem.Error);    
-            }
-
-            requestItems.Add(requestItem.Value);
-            conditions.Clear();
+            items.Add(itemResult.Value);
         }
 
-        var requestResult = Request.Create(userId, side, requestItems);
-        
+        var requestResult = Request.Create(userId, side, items);
+
         if (requestResult.IsFailure)
         {
-            return Result.Failure($"can not create Request, error: {requestResult.Error}");
+            return Result.Failure<Guid>(requestResult.Error);
         }
 
-        return await _repository.AddAsync(requestResult.Value, cancellationToken);
+        var request = requestResult.Value;
+        var addResult = await _repository.AddAsync(request, cancellationToken);
+
+        if (addResult.IsFailure)
+        {
+            return Result.Failure<Guid>(addResult.Error);
+        }
+
+        return Result.Success(request.Id);
+    }
+
+    private static Result<RequestItem> BuildItem(CreateRequestItemDto itemDto)
+    {
+        var conditions = new List<Condition>();
+
+        foreach (var conditionDto in itemDto.Conditions)
+        {
+            if (IsEmpty(conditionDto))
+            {
+                continue;
+            }
+
+            var conditionResult = BuildCondition(conditionDto);
+
+            if (conditionResult.IsFailure)
+            {
+                return Result.Failure<RequestItem>($"{conditionDto.AttributeKey}: {conditionResult.Error}");
+            }
+
+            conditions.Add(conditionResult.Value);
+        }
+
+        return RequestItem.Create(itemDto.CategoryKey, conditions);
+    }
+
+    private static Result<Condition> BuildCondition(ConditionDto conditionDto)
+    {
+        if (conditionDto.Type == AttributeType.Range)
+        {
+            return Condition.Range(conditionDto.AttributeKey, conditionDto.Min, conditionDto.Max);
+        }
+
+        if (conditionDto.Type == AttributeType.Set)
+        {
+            return Condition.Set(conditionDto.AttributeKey, conditionDto.Values ?? Array.Empty<string>());
+        }
+
+        return Result.Failure<Condition>("unknown attribute type");
+    }
+
+    private static bool IsEmpty(ConditionDto conditionDto)
+    {
+        if (conditionDto.Type == AttributeType.Range)
+        {
+            return conditionDto.Min is null && conditionDto.Max is null;
+        }
+
+        if (conditionDto.Type == AttributeType.Set)
+        {
+            return conditionDto.Values is null || conditionDto.Values.All(string.IsNullOrWhiteSpace);
+        }
+
+        return false;
     }
 }

@@ -5,5 +5,5 @@ using LeadBridge.Core.Domain.Enums;
 namespace LeadBridge.Core.Application.Interfaces.Services;
 public interface IRequestService
 {
-    Task<Result> Create(Guid userId, RequestSide side, CreateRequestDto requestDto, CancellationToken cancellationToken);    
+    Task<Result<Guid>> CreateAsync(Guid userId, RequestSide side, CreateRequestDto requestDto, CancellationToken cancellationToken);    
 }
