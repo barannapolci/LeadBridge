@@ -44,7 +44,7 @@ public class RequestController : ControllerBase
 
         var response = new CreatedRequestResponse(requestId.Value);
 
-        return Created($"/api/requests/{response.Id}", response);   
+        return Created($"/api/request/{response.Id}", response);   
     }
 
     [HttpGet]
