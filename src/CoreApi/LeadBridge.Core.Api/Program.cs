@@ -40,7 +40,8 @@ try
     builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
     builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
     builder.Services.AddScoped<ICatalogService, CatalogService>();
-
+    builder.Services.AddScoped<IRequestRepository, RequestRepository>();
+    builder.Services.AddScoped<IRequestService, RequestService>();
     builder.Services
     .AddOptions<JwtSettings>()
     .Bind(builder.Configuration.GetSection(JwtSettings.SectionName))

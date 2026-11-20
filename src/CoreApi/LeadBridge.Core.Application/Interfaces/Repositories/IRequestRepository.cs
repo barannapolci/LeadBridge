@@ -1,10 +1,11 @@
 using CSharpFunctionalExtensions;
+using LeadBridge.Core.Domain.Entities;
 namespace LeadBridge.Core.Application.Interfaces;
 public interface IRequestRepository
 {
-    Task<Result> AddASync(CancellationToken cancellationToken);
+    Task<Result> AddAsync(Request request, CancellationToken cancellationToken = default);
 
-    Task<Result> FindAllAsync(CancellationToken cancellationToken);
+    Task<IReadOnlyList<Request>> GetByOwnerAsync(Guid ownerId, CancellationToken cancellationToken = default);
 
-    Task<Result> UpdateAsync(CancellationToken cancellationToken);
+    Task<Maybe<Request>> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 }

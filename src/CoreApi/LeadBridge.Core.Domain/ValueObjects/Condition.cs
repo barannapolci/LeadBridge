@@ -5,6 +5,8 @@ namespace LeadBridge.Core.Domain.ValueObjects;
 
 public sealed class Condition
 {
+    public const int AttributeKeyMaxLenght = 30;
+
     private Condition()
     {
     }
@@ -45,6 +47,11 @@ public sealed class Condition
             return Result.Failure<Condition>("range minimum can not be greater than maximum");
         }
 
+        if (min < 0 || max < 0)
+        {
+            return Result.Failure<Condition>("max or min variable must be positive");
+        }
+
         return Result.Success(new Condition(attributeKey.Trim(), AttributeType.Range, min, max, Array.Empty<string>()));
     }
 
@@ -56,8 +63,8 @@ public sealed class Condition
         }
 
         var cleaned = values
+            .Where(v => !string.IsNullOrWhiteSpace(v))
             .Select(v => v.Trim())
-            .Where(v => v.Length > 0)
             .Distinct()
             .ToList();
 
